@@ -1,7 +1,7 @@
-package com.droneFlightPlanner.pages;
+package pages;
 
-import com.droneFlightPlanner.utilities.Driver;
 import org.openqa.selenium.support.PageFactory;
+import utilities.Driver;
 
 
 public abstract class CommonPage {

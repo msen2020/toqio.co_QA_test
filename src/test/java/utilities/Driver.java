@@ -1,4 +1,4 @@
-package com.droneFlightPlanner.utilities;
+package utilities;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -14,8 +14,8 @@ import org.openqa.selenium.safari.SafariDriver;
 import java.time.Duration;
 import java.util.HashMap;
 
-import static com.droneFlightPlanner.stepDefinitions.Hooks.browserType;
-import static com.droneFlightPlanner.stepDefinitions.Hooks.isHeadless;
+import static stepDefinitions.Hooks.browserType;
+import static stepDefinitions.Hooks.isHeadless;
 
 public class Driver {
 

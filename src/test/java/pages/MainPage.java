@@ -1,4 +1,4 @@
-package com.droneFlightPlanner.pages;
+package pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,50 +8,29 @@ import java.util.List;
 
 public class MainPage extends CommonPage {
 
-    @FindBy(xpath = "//button[@class= 'md-icon-button md-button md-ink-ripple']")
-    public WebElement plusIcon;
+    @FindBy(xpath = "//button[@id= 'hs-eu-confirmation-button']")
+    public WebElement acceptAll;
 
-    @FindBy(xpath = "//md-content[@class= 'dfp-editor-metadata']")
-    public WebElement chooseAPointText;
+    @FindBy(id = "hs_cos_wrapper_header_logo_hs_logo_widget")
+    public WebElement companyLogoOnHeaders;
 
-    @FindBy(xpath = "//p[@ng-show=\"editor.state==='created'\"]")
-    public WebElement flightPlanCreatedText;
+    @FindBy(css = ".header-banner-bg-image")
+    public WebElement mainBanner;
 
-    @FindBy(xpath = "//p[@ng-show=\"editor.state==='go-on'\"]")
-    public WebElement yourDataSavedText;
+    @FindBy(xpath = "(//ul[@class='active-branch'])[1]/li")
+    public List<WebElement> navigationMenu;
 
-    @FindBy(xpath = "//h4[text() = '1']")
-    public WebElement firstCreatedFlightPoint;
+    @FindBy(xpath = "")
+    public WebElement aa;
 
-    @FindBy(xpath = "//h4[text() = '2']")
-    public WebElement secondCreatedFlightPoint;
+    @FindBy(xpath = "")
+    public WebElement aaa;
 
-    @FindBy(xpath = "//p[@class= 'dfp-item-updated-at']")
-    public WebElement createdFlightPlanCoordinates;
 
-    @FindBy(xpath = "(//p[@class= 'dfp-item-updated-at'])[2]")
-    public WebElement createdSecondFlightPlan;
 
-    @FindBy(xpath = "//input[@ng-model= 'editor.plan.description']")
-    public WebElement flightDescriptionBox;
 
-    @FindBy(xpath = "//input[@ng-model= 'editor.plan.description']")
-    public WebElement flightDescriptionText;
 
-    @FindBy(xpath = "//button[@class= 'md-no-style md-button md-ink-ripple']")
-    public List<WebElement> createdFlightPlan;
 
-    @FindBy(xpath = "//button[@class= 'md-no-style md-button md-ink-ripple']")
-    public List<WebElement> secondCreatedFlightPlan;
-
-    @FindBy(css = "md-list-item.dfp-item")
-    public List<WebElement> flightPlans;
-
-    @FindBy(tagName = "dfp-editor")
-    public WebElement map;
-
-    @FindBy(css = ".leaflet-marker-icon")
-    public List<WebElement> points;
 
 
 }

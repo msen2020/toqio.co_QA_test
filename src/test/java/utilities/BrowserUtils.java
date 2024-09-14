@@ -1,4 +1,4 @@
-package com.droneFlightPlanner.utilities;
+package utilities;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
@@ -8,14 +8,24 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static com.droneFlightPlanner.stepDefinitions.Hooks.actions;
-import static com.droneFlightPlanner.stepDefinitions.Hooks.driver;
+import static stepDefinitions.Hooks.driver;
 
 public class BrowserUtils {
 
     public static void waitForVisibility(WebElement element) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(30));
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static void waitForVisibility(String text) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+        By locator = By.xpath("//*[text()= '" + text + "']");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeToWaitInSec));
+        return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public static void waitForClickability(WebElement element) {
@@ -66,26 +76,13 @@ public class BrowserUtils {
         }
     }
 
-    public static class FindCoordinate {
-        private final int x;
-        private final int y;
-
-        public FindCoordinate(String str) {
-            x = Integer.parseInt(str.split(" x=")[1].split(",")[0]);
-            y = Integer.parseInt(str.split(" y=")[1].split("}")[0]);
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
+    public static void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        BrowserUtils.waitForVisibility(element, 10);
     }
 
-    public static void moveToElement(int endX, int endY) {
-        WebElement map = driver.findElement(By.tagName("dfp-editor"));
-        actions.moveToElement(map, endX, endY).click().build().perform();
+    public static void scrollToElement(JavascriptExecutor js, WebElement element) {
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 }
+

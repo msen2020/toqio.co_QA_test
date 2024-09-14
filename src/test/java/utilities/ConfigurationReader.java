@@ -1,4 +1,4 @@
-package com.droneFlightPlanner.utilities;
+package utilities;
 
 import java.io.FileInputStream;
 import java.io.IOException;

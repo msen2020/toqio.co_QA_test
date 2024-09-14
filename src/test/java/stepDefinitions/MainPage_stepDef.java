@@ -14,8 +14,10 @@ import utilities.ConfigurationReader;
 import utilities.Driver;
 
 import java.util.List;
+import java.util.Map;
 
 import static stepDefinitions.Hooks.driver;
+import static utilities.BrowserUtils.clickAndVerify;
 
 public class MainPage_stepDef extends CommonPage {
 
@@ -95,9 +97,20 @@ public class MainPage_stepDef extends CommonPage {
         }
     }
 
-    @Then("user verifies the links in the navigation bar lead to the correct pages when clicked")
-    public void userVerifiesTheLinksInTheNavigationBarLeadToTheCorrectPagesWhenClicked() {
+    @Then("the user clicks the links in the navigation bar and verifies they led to the correct pages")
+    public void theUserClicksTheLinksInTheNavigationBarAndVerifiesTheyLedToTheCorrectPages(DataTable dataTable) throws Exception {
+        // Read expected URLs from a file (replace "expected_urls.txt" with your filename)
+        Map<String, String> expectedUrls = BrowserUtils.readExpectedUrlsFromFile("expected_urls.txt");
 
+        // Find the navigation menu elements
+        List<WebElement> navigationMenuElements = mainPage.navigationMenu();
+
+        // Click and verify each link
+        for (WebElement element : navigationMenuElements) {
+            String href = element.getAttribute("href");
+            String expectedUrl = expectedUrls.get(href);
+            clickAndVerify(driver, element, expectedUrl);
+        }
     }
 
     @When("user clicks the Footer Items link and verifies the expected URL")

@@ -22,7 +22,6 @@ Feature: Verify Homepage Load and Content Display
       | Company   |
       | Resources |
 
-  Scenario:
     Then user verifies the content titles are visible on Main page
       | Empower your distribution network for optimal performance                         |
       | Build a financial ecosystem on a single platform where everybody wins             |
@@ -38,12 +37,14 @@ Feature: Verify Homepage Load and Content Display
       | Toqio in the news                                                                 |
 
   Scenario: HP_01 TC_02
-    Then user verifies the links in the navigation bar lead to the correct pages when clicked
-      | Home      |
-      | Platform  |
-      | Use Cases |
-      | Company   |
-      | Resources |
+    Then the user clicks the links in the navigation bar and verifies they led to the correct pages
+      | Home      | https://toqio.co/          |
+      | Platform  | https://toqio.co/platform  |
+      | Use Cases | https://toqio.co/use-cases |
+
+  Scenario:
+  | Company   |
+  | Resources |
 
   Scenario: HP_01 TC_03 Verify the footer content links are present and functional.
     Then user verifies the footer content links are present and functional

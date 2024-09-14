@@ -6,7 +6,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import static stepDefinitions.Hooks.driver;
 
@@ -83,6 +87,33 @@ public class BrowserUtils {
 
     public static void scrollToElement(JavascriptExecutor js, WebElement element) {
         js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    public static void clickAndVerify(WebDriver driver, By linkLocator, String expectedUrl) {
+        driver.findElement(linkLocator).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+        if (driver.getCurrentUrl().equals(expectedUrl)) {
+            System.out.println("Link verified: " + linkLocator + " leads to " + expectedUrl);
+        } else {
+            System.out.println("Error! Link " + linkLocator + " does not lead to " + expectedUrl);
+        }
+    }
+
+    public static Map<String, String> readExpectedUrlsFromFile(String filename) throws Exception {
+        Map<String, String> urls = new HashMap<>();
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("=");
+            if (parts.length == 2) {
+                urls.put(parts[0].trim(), parts[1].trim());
+            } else {
+                System.out.println("Invalid line in expected_urls.txt: " + line);
+            }
+        }
+        reader.close();
+        return urls;
     }
 }
 

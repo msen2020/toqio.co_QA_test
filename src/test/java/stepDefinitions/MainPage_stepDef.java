@@ -116,7 +116,17 @@ public class MainPage_stepDef extends CommonPage {
 
     @Then("user verifies the company logo is visible in the footer")
     public void userVerifiesTheCompanyLogoIsVisibleInTheFooter() {
-        BrowserUtils.verifyElementDisplayed(mainPage().footerMenuList.get(0));
+        BrowserUtils.verifyElementDisplayed(mainPage().logoLocatorOnFooter);
+    }
+
+    @Then("user verifies the Copyright is visible in the footer")
+    public void userVerifiesTheCopyrightIsVisibleInTheFooter() {
+        BrowserUtils.verifyElementDisplayed(mainPage().copyrightLocator);
+    }
+
+    @Then("user verifies the Social Media Links are visible in the footer")
+    public void userVerifiesTheSocialMediaLinksAreVisibleInTheFooter() {
+        BrowserUtils.verifyElementDisplayed(mainPage().socialMediaLinksLocator);
     }
 
     @Then("user verifies the footer content links are present and functional")
@@ -133,11 +143,6 @@ public class MainPage_stepDef extends CommonPage {
             Assert.assertTrue("Element '" + expectedLinkTitle + "' is not visible", link.isDisplayed());
             Assert.assertTrue("Element '" + expectedLinkTitle + "' is not clickable", link.isEnabled());
         }
-    }
-
-    @When("user clicks the Footer Items link and verifies the expected URL")
-    public void userClicksTheFooterItemsLinkAndVerifiesTheExpectedURL(DataTable dataTable) {
-
     }
 
     @When("user hovers over the link Company")
@@ -195,6 +200,62 @@ public class MainPage_stepDef extends CommonPage {
             // Assert visibility and clickability
             Assert.assertTrue("Element '" + expectedLinkTitle + "' is not visible", link.isDisplayed());
             Assert.assertTrue("Element '" + expectedLinkTitle + "' is not clickable", link.isEnabled());
+        }
+    }
+
+    @When("user clicks the Footer Item {string}")
+    public void userClicksTheFooterItem(String link) {
+        WebElement linkElement = driver.findElement(By.xpath("//div[@class='flex_row  ']//div/ul/li"));
+        BrowserUtils.waitForPageToLoad(25);
+        BrowserUtils.scrollToBottom();
+        // Wait for element clickability before clicking
+        BrowserUtils.waitForClickability(linkElement);
+        // Click with handling of stale element exceptions
+//        BrowserUtils.staleElementClick(linkElement, 5);
+        BrowserUtils.waitAndClick(linkElement,5);
+    }
+
+    @Then("user verifies the directed {string}")
+    public void userVerifiesTheDirected(String url) {
+        // Verify the current URL after navigation
+        String currentUrl = driver.getCurrentUrl();
+        if (!currentUrl.equals(url)) {
+            throw new AssertionError("Expected URL: " + url + ", but got: " + currentUrl);
+        }
+        System.out.println("Navigated to URL: " + currentUrl);
+    }
+
+    @Then("user verifies the {string} of the page")
+    public void userVerifiesTheOfThePage(String title) {
+        // Collect all title elements on the page (h1, h2, h3, h4, span)
+        List<WebElement> titleElements = driver.findElements(By.cssSelector("h1, h2, h3, h4, span"));
+
+        // Use JavascriptExecutor for scrolling
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Trim and normalize expected title whitespace
+        String expectedTitle = title.trim().replaceAll("\\s+", " ");
+        boolean found = false;
+
+        // Iterate through the title elements to find the expected title
+        for (
+                WebElement element : titleElements) {
+            String actualTitle = element.getText().trim().replaceAll("\\s+", " ");
+            if (actualTitle.equals(expectedTitle)) {
+                // Scroll to the element before verifying visibility
+                BrowserUtils.scrollToElement(js, element);
+                BrowserUtils.waitForVisibility(element);
+
+                // Assert the element is displayed
+                Assert.assertTrue("Expected title '" + expectedTitle + "' is not visible", element.isDisplayed());
+                found = true;
+                break;
+            }
+        }
+
+        // If title is not found, throw an assertion failure
+        if (!found) {
+            Assert.fail("Expected title '" + expectedTitle + "' was not found on the page");
         }
     }
 

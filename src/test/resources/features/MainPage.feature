@@ -36,7 +36,7 @@ Feature: Verify Homepage Load and Content Display
       | Latest awards                                                                     |
       | Toqio in the news                                                                 |
 
-  Scenario Outline: HP_01 TC_02
+  Scenario Outline: HP_01 TC_02 verify correct pages open when clicked
     Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
     Examples:
       | links     | pages                      |
@@ -44,7 +44,7 @@ Feature: Verify Homepage Load and Content Display
       | Platform  | https://toqio.co/platform  |
       | Use Cases | https://toqio.co/use-cases |
 
-  Scenario: HP_01 TC_03
+  Scenario: HP_01 TC_03 verify the Company related links appear and functional
     When user hovers over the link Company
     Then user verifies the Company related links appear and functional
       | About Us |
@@ -53,7 +53,7 @@ Feature: Verify Homepage Load and Content Display
       | Talent   |
       | Contact  |
 
-  Scenario: HP_01 TC_04
+  Scenario: HP_01 TC_04 verify the Resources related links appear and functional
     When user hovers over the link Resources
     Then user verifies the Resources related links appear and functional
       | Insights |
@@ -61,6 +61,8 @@ Feature: Verify Homepage Load and Content Display
 
   Scenario: HP_01 TC_05 Verify the footer content links are present and functional.
     Then user verifies the company logo is visible in the footer
+    Then user verifies the Copyright is visible in the footer
+    Then user verifies the Social Media Links are visible in the footer
     Then user verifies the footer content links are present and functional
       | Home           |
       | Platform       |
@@ -77,22 +79,26 @@ Feature: Verify Homepage Load and Content Display
       | Legal notice   |
       | Terms of use   |
 
-    When user clicks the Footer Items link and verifies the expected URL
-      | Home           |
-      | Platform       |
-      | Use Cases      |
-      | Insights       |
-      | Podcast        |
-      | About Us       |
-      | Newsroom       |
-      | Team           |
-      | Talent         |
-      | Contact        |
-      | Privacy policy |
-      | Cookies        |
-      | Legal notice   |
-      | Terms of use   |
+  Scenario Outline: HP_01 TC_06 verify Footer Item links directed correctly
+    When user clicks the Footer Item "<links>"
+    Then user verifies the directed "<pages>"
+    Then user verifies the "<titles>" of the page
+    Examples:
+      | links          | pages                           | titles                                                            |
+      | Home           | https://toqio.co/               | Empower your distribution network for optimal performance         |
+      | Platform       | https://toqio.co/platform       | The Toqio platform                                                |
+      | Use Cases      | https://toqio.co/use-cases      | Use cases                                                         |
+      | Insights       | https://toqio.co/insights       | Insights                                                          |
+      | Podcast        | https://toqio.co/podcast        | Embedded in the Market The podcast hosted by Toqio!               |
+      | About Us       | https://toqio.co/about-us/      | What is Toqio?                                                    |
+      | Newsroom       | https://toqio.co/newsroom       | Newsroom                                                          |
+      | Team           | https://toqio.co/team           | Leadership                                                        |
+      | Talent         | https://toqio.co/talent         | If you're forward-thinking about finance, this is the place to be |
+      | Contact        | https://toqio.co/contact        | Contact us                                                        |
+      | Privacy policy | https://toqio.co/privacy-policy | Privacy policy                                                    |
+      | Cookies        | https://toqio.co/cookies        | Cookie information                                                |
+      | Legal notice   | https://toqio.co/legal-notice   | Legal notice                                                      |
+      | Terms of use   | https://toqio.co/terms-of-use   | Terms of use                                                      |
 
 
-  Scenario: HP_01 TC_04
 #  6. Confirm that dynamic content, if any (such as testimonials or featured products/services), loads and displays as expected.

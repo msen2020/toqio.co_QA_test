@@ -11,11 +11,19 @@ public abstract class CommonPage {
     }
 
     private MainPage mainPage;
+    private Contact_salesPage contactSales ;
 
     public MainPage mainPage() {
         if (mainPage == null) {
             mainPage = new MainPage();
         }
         return mainPage;
+    }
+
+    public Contact_salesPage contactSales() {
+        if (contactSales == null) {
+            contactSales = new Contact_salesPage();
+        }
+        return contactSales;
     }
 }

@@ -8,9 +8,6 @@ import java.util.List;
 
 public class MainPage extends CommonPage {
 
-    @FindBy(xpath = "//button[@id= 'hs-eu-confirmation-button']")
-    public WebElement acceptAll;
-
     @FindBy(id = "hs_cos_wrapper_header_logo_hs_logo_widget")
     public WebElement companyLogoOnHeaders;
 
@@ -29,23 +26,18 @@ public class MainPage extends CommonPage {
     @FindBy(xpath = "(//a[@href='javascript:;'])[3]")
     public WebElement resourcesLink;
 
-    @FindBy(css = ".hs-menu-item.hs-menu-depth-1.active.active-branch:nth-child(1)")
-    public WebElement homeLinkFooter;
-
     @FindBy(xpath = "//div[@class='flex_row  ']//div/ul/li")
     public List<WebElement> footerMenuList;
 
     @FindBy(css = ".footer-logo img")
-    public WebElement logoLocator;
+    public WebElement logoLocatorOnFooter;
 
-    @FindBy(css = ".footer-content div:nth-child(2) div")
+    @FindBy(css = ".footer-content div:nth-child(2)")
     public WebElement copyrightLocator;
 
-    @FindBy(css = ".footer-social-item")
+    @FindBy(css = ".footer-social")
     public WebElement socialMediaLinksLocator;
 
-    @FindBy(xpath = "")
-    public WebElement aaa;
 
 
 

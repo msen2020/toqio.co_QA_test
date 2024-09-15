@@ -89,6 +89,14 @@ public class BrowserUtils {
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
+    public static void staleElementClick(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+
+        element.click();
+
+    }
+
     public static void clickAndVerify(WebDriver driver, By linkLocator, String expectedUrl) {
         driver.findElement(linkLocator).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

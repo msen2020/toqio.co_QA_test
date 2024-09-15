@@ -3,7 +3,6 @@ package stepDefinitions;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import static stepDefinitions.Hooks.driver;
-import static utilities.BrowserUtils.clickAndVerify;
 
 public class MainPage_stepDef extends CommonPage {
 
@@ -97,26 +95,43 @@ public class MainPage_stepDef extends CommonPage {
         }
     }
 
-    @Then("the user clicks the links in the navigation bar and verifies they led to the correct pages")
-    public void theUserClicksTheLinksInTheNavigationBarAndVerifiesTheyLedToTheCorrectPages(DataTable dataTable) throws Exception {
-        // Read expected URLs from a file (replace "expected_urls.txt" with your filename)
-        Map<String, String> expectedUrls = BrowserUtils.readExpectedUrlsFromFile("expected_urls.txt");
+    @Then("user clicks the links in the navigation bar and verifies they lead to the correct pages")
+    public void userClicksNavigationLinks(DataTable dataTable) {
+        // Convert the DataTable to a List of Maps (for key-value pairs)
+        List<Map<String, String>> navigationLinks = dataTable.asMaps(String.class, String.class);
 
-        // Find the navigation menu elements
-        List<WebElement> navigationMenuElements = mainPage.navigationMenu();
+        // Loop through the navigation menu items
+        for (int i = 2; i < mainPage().navigationMenu.size(); i++) {
+            WebElement menuLink = mainPage().navigationMenu.get(i);
 
-        // Click and verify each link
-        for (WebElement element : navigationMenuElements) {
-            String href = element.getAttribute("href");
-            String expectedUrl = expectedUrls.get(href);
-            clickAndVerify(driver, element, expectedUrl);
+            // Wait for the visibility of the element
+            BrowserUtils.waitForVisibility(menuLink);
+
+            // Click on the menu link
+            menuLink.click();
+
+            // Add synchronization time (e.g., wait for page load)
+            BrowserUtils.waitForPageToLoad(30);
+
+            // Get the current URL and the expected URL from the DataTable
+            String expectedUrl = navigationLinks.get(i - 1).get("URL");
+            String currentUrl = Driver.getDriver().getCurrentUrl();
+
+            // Verify the URL matches the expected URL
+            Assert.assertEquals("The URL did not match for menu item: " + (i + 1), expectedUrl, currentUrl);
+
+            // Navigate back to the main page
+            Driver.getDriver().navigate().back();
+
+            // Wait for the navigation menu to be visible again after going back
+            BrowserUtils.waitForVisibility(mainPage().navigationMenu.get(1));
         }
     }
 
-    @When("user clicks the Footer Items link and verifies the expected URL")
-    public void userClicksTheFooterItemsLinkAndVerifiesTheExpectedURL(DataTable dataTable) {
-
-    }
+//    @When("user clicks the Footer Items link and verifies the expected URL")
+//    public void userClicksTheFooterItemsLinkAndVerifiesTheExpectedURL(DataTable dataTable) {
+//
+//    }
 
     @Then("user verifies the footer content links are present and functional")
     public void userVerifiesTheFooterContentLinksArePresentAndFunctional(DataTable dataTable) {
@@ -143,5 +158,21 @@ public class MainPage_stepDef extends CommonPage {
         }
     }
 
+    @Then("user clicks the {string} in the navigation bar and verifies they lead to the correct {string}")
+    public void userClicksTheInTheNavigationBarAndVerifiesTheyLeadToTheCorrect(String link, String url) {
+        WebElement linkElement = driver.findElement(By.linkText(link));
 
+        // Wait for element visibility before click
+        BrowserUtils.waitForVisibility(linkElement);
+
+        // Click with handling of stale element
+        BrowserUtils.staleElementClick(linkElement, 5);
+
+        // Verify the current URL
+        String currentUrl = driver.getCurrentUrl();
+        if (!currentUrl.equals(url)) {
+            throw new AssertionError("Expected URL: " + url + ", Actual URL: " + currentUrl);
+        }
+        System.out.println(currentUrl);
+    }
 }

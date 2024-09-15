@@ -37,7 +37,15 @@ Feature: Verify Homepage Load and Content Display
       | Toqio in the news                                                                 |
 
   Scenario: HP_01 TC_02
-    Then the user clicks the links in the navigation bar and verifies they led to the correct pages
+    Then user clicks the links in the navigation bar and verifies they lead to the correct pages
+      | Home      | https://toqio.co/          |
+      | Platform  | https://toqio.co/platform  |
+      | Use Cases | https://toqio.co/use-cases |
+
+  Scenario Outline:
+    Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
+    Examples:
+      | links     | pages                      |
       | Home      | https://toqio.co/          |
       | Platform  | https://toqio.co/platform  |
       | Use Cases | https://toqio.co/use-cases |

@@ -60,6 +60,7 @@ Feature: Verify Homepage Load and Content Display
       | Podcast  |
 
   Scenario: HP_01 TC_05 Verify the footer content links are present and functional.
+    Then user verifies the company logo is visible in the footer
     Then user verifies the footer content links are present and functional
       | Home           |
       | Platform       |

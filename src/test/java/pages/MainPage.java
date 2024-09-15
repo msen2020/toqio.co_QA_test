@@ -32,7 +32,7 @@ public class MainPage extends CommonPage {
     @FindBy(css = ".hs-menu-item.hs-menu-depth-1.active.active-branch:nth-child(1)")
     public WebElement homeLinkFooter;
 
-    @FindBy(xpath = "//div[@class='flex_row  ']/div")
+    @FindBy(xpath = "//div[@class='flex_row  ']//div/ul/li")
     public List<WebElement> footerMenuList;
 
     @FindBy(css = ".footer-logo img")

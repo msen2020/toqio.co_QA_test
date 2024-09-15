@@ -114,6 +114,11 @@ public class MainPage_stepDef extends CommonPage {
         System.out.println(currentUrl);
     }
 
+    @Then("user verifies the company logo is visible in the footer")
+    public void userVerifiesTheCompanyLogoIsVisibleInTheFooter() {
+        BrowserUtils.verifyElementDisplayed(mainPage().footerMenuList.get(0));
+    }
+
     @Then("user verifies the footer content links are present and functional")
     public void userVerifiesTheFooterContentLinksArePresentAndFunctional(DataTable dataTable) {
         BrowserUtils.scrollToBottom();

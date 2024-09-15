@@ -27,9 +27,9 @@ public class BrowserUtils {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
+    public static void waitForVisibility(WebElement element, int timeToWaitInSec) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeToWaitInSec));
-        return wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public static void waitForClickability(WebElement element) {
@@ -103,9 +103,18 @@ public class BrowserUtils {
     public static void staleElementClick(WebElement element, int timeout) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         wait.until(ExpectedConditions.elementToBeClickable(element));
-
         element.click();
+    }
 
+    public static void waitAndClick(WebElement element, int timeout) {
+        for (int i = 0; i < timeout; i++) {
+            try {
+                element.click();
+                return;
+            } catch (WebDriverException e) {
+                wait(1);
+            }
+        }
     }
 
     public static void clickAndVerify(WebDriver driver, By linkLocator, String expectedUrl) {

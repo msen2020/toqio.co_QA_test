@@ -36,13 +36,7 @@ Feature: Verify Homepage Load and Content Display
       | Latest awards                                                                     |
       | Toqio in the news                                                                 |
 
-  Scenario: HP_01 TC_02
-    Then user clicks the links in the navigation bar and verifies they lead to the correct pages
-      | Home      | https://toqio.co/          |
-      | Platform  | https://toqio.co/platform  |
-      | Use Cases | https://toqio.co/use-cases |
-
-  Scenario Outline:
+  Scenario Outline: HP_01 TC_02
     Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
     Examples:
       | links     | pages                      |
@@ -50,11 +44,22 @@ Feature: Verify Homepage Load and Content Display
       | Platform  | https://toqio.co/platform  |
       | Use Cases | https://toqio.co/use-cases |
 
-  Scenario:
-  | Company   |
-  | Resources |
+  Scenario: HP_01 TC_03
+    When user hovers over the link Company
+    Then user verifies the Company related links appear and functional
+      | About Us |
+      | Newsroom |
+      | Team     |
+      | Talent   |
+      | Contact  |
 
-  Scenario: HP_01 TC_03 Verify the footer content links are present and functional.
+  Scenario: HP_01 TC_04
+    When user hovers over the link Resources
+    Then user verifies the Resources related links appear and functional
+      | Insights |
+      | Podcast  |
+
+  Scenario: HP_01 TC_05 Verify the footer content links are present and functional.
     Then user verifies the footer content links are present and functional
       | Home           |
       | Platform       |

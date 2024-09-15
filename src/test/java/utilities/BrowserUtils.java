@@ -42,11 +42,17 @@ public class BrowserUtils {
             assert driver != null;
             return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
         };
+
         try {
             WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeOutInSeconds));
             wait.until(expectation);
-        } catch (Throwable error) {
-            error.printStackTrace();
+        } catch (TimeoutException e) {
+            // Handle timeout exception gracefully
+            String errorMessage = "Page load timed out after " + timeOutInSeconds + " seconds.";
+            throw new RuntimeException(errorMessage, e);
+        } catch (Throwable e) {
+            // Handle other exceptions
+            throw new RuntimeException("Error waiting for page load: " + e.getMessage(), e);
         }
     }
 
@@ -78,6 +84,11 @@ public class BrowserUtils {
                  InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void scrollToBottom() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,document.body.scrollHeight)");
+        wait(2);
     }
 
     public static void scrollToElement(WebElement element) {

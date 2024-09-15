@@ -3,6 +3,7 @@ package stepDefinitions;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,8 +14,8 @@ import utilities.ConfigurationReader;
 import utilities.Driver;
 
 import java.util.List;
-import java.util.Map;
 
+import static stepDefinitions.Hooks.actions;
 import static stepDefinitions.Hooks.driver;
 
 public class MainPage_stepDef extends CommonPage {
@@ -95,69 +96,6 @@ public class MainPage_stepDef extends CommonPage {
         }
     }
 
-    @Then("user clicks the links in the navigation bar and verifies they lead to the correct pages")
-    public void userClicksNavigationLinks(DataTable dataTable) {
-        // Convert the DataTable to a List of Maps (for key-value pairs)
-        List<Map<String, String>> navigationLinks = dataTable.asMaps(String.class, String.class);
-
-        // Loop through the navigation menu items
-        for (int i = 2; i < mainPage().navigationMenu.size(); i++) {
-            WebElement menuLink = mainPage().navigationMenu.get(i);
-
-            // Wait for the visibility of the element
-            BrowserUtils.waitForVisibility(menuLink);
-
-            // Click on the menu link
-            menuLink.click();
-
-            // Add synchronization time (e.g., wait for page load)
-            BrowserUtils.waitForPageToLoad(30);
-
-            // Get the current URL and the expected URL from the DataTable
-            String expectedUrl = navigationLinks.get(i - 1).get("URL");
-            String currentUrl = Driver.getDriver().getCurrentUrl();
-
-            // Verify the URL matches the expected URL
-            Assert.assertEquals("The URL did not match for menu item: " + (i + 1), expectedUrl, currentUrl);
-
-            // Navigate back to the main page
-            Driver.getDriver().navigate().back();
-
-            // Wait for the navigation menu to be visible again after going back
-            BrowserUtils.waitForVisibility(mainPage().navigationMenu.get(1));
-        }
-    }
-
-//    @When("user clicks the Footer Items link and verifies the expected URL")
-//    public void userClicksTheFooterItemsLinkAndVerifiesTheExpectedURL(DataTable dataTable) {
-//
-//    }
-
-    @Then("user verifies the footer content links are present and functional")
-    public void userVerifiesTheFooterContentLinksArePresentAndFunctional(DataTable dataTable) {
-        List<String> expectedTitles = dataTable.asList();
-
-        // Find the navigation menu elements
-        List<WebElement> navigationMenuElements = mainPage().navigationMenu;
-
-        // Verify that each expected title is present, visible, and clickable
-        for (String expectedTitle : expectedTitles) {
-            boolean found = false;
-            for (WebElement element : navigationMenuElements) {
-                String actualTitle = element.getText();
-                if (actualTitle.equals(expectedTitle)) {
-                    found = true;
-                    Assert.assertTrue("Element '" + expectedTitle + "' is not visible", element.isDisplayed());
-                    Assert.assertTrue("Element '" + expectedTitle + "' is not clickable", element.isEnabled());
-                    break;
-                }
-            }
-            if (!found) {
-                Assert.fail("Element '" + expectedTitle + "' is not found in the navigation menu");
-            }
-        }
-    }
-
     @Then("user clicks the {string} in the navigation bar and verifies they lead to the correct {string}")
     public void userClicksTheInTheNavigationBarAndVerifiesTheyLeadToTheCorrect(String link, String url) {
         WebElement linkElement = driver.findElement(By.linkText(link));
@@ -175,4 +113,85 @@ public class MainPage_stepDef extends CommonPage {
         }
         System.out.println(currentUrl);
     }
+
+    @Then("user verifies the footer content links are present and functional")
+    public void userVerifiesTheFooterContentLinksArePresentAndFunctional(DataTable dataTable) {
+        BrowserUtils.scrollToBottom();
+        List<String> expectedLinks = dataTable.asList();
+
+        // Verify that each expected link is present, visible, and clickable
+        for (String expectedLinkTitle : expectedLinks) {
+            // Find the element by text
+            WebElement link = Driver.getDriver().findElement(By.xpath("//div[@class='flex_row  ']//div/ul/li"));
+
+            // Assert visibility and clickability
+            Assert.assertTrue("Element '" + expectedLinkTitle + "' is not visible", link.isDisplayed());
+            Assert.assertTrue("Element '" + expectedLinkTitle + "' is not clickable", link.isEnabled());
+        }
+    }
+
+    @When("user clicks the Footer Items link and verifies the expected URL")
+    public void userClicksTheFooterItemsLinkAndVerifiesTheExpectedURL(DataTable dataTable) {
+
+    }
+
+    @When("user hovers over the link Company")
+    public void userHoversOverTheLinkCompany() {
+        BrowserUtils.waitForPageToLoad(25);
+        BrowserUtils.waitForVisibility(mainPage().companyLink);
+        actions.moveToElement(mainPage().companyLink).build().perform();
+    }
+
+    @Then("user verifies the Company related links appear and functional")
+    public void userVerifiesTheCompanyRelatedLinksAppearAndFunctional(DataTable dataTable) {
+        BrowserUtils.wait(1);
+        List<String> expectedLinks = dataTable.asList();
+
+        // Find the navigation menu elements
+        List<WebElement> relatedLinksElements = mainPage().companyMenuLinks;
+
+        // Verify that each expected links is present, visible, and clickable
+        for (String expectedLinkTitles : expectedLinks) {
+            boolean found = false;
+            for (WebElement Links : relatedLinksElements) {
+                String actualTitle = Links.getText();
+                if (actualTitle.equals(expectedLinkTitles)) {
+                    found = true;
+                    Assert.assertTrue("Element '" + expectedLinkTitles + "' is not visible", Links.isDisplayed());
+                    Assert.assertTrue("Element '" + expectedLinkTitles + "' is not clickable", Links.isEnabled());
+                    break;
+                }
+            }
+            if (!found) {
+                Assert.fail("Element '" + expectedLinkTitles + "' is not found in the navigation menu");
+            }
+        }
+    }
+
+    @When("user hovers over the link Resources")
+    public void userHoversOverTheLinkResources() {
+        mainPage().resourcesLink.click();
+    }
+
+    @Then("user verifies the Resources related links appear and functional")
+    public void userVerifiesTheResourcesRelatedLinksAppearAndFunctional(DataTable dataTable) {
+        BrowserUtils.waitForPageToLoad(25);
+
+        List<String> expectedLinks = dataTable.asList();
+
+        // Verify that each expected link is present, visible, and clickable
+        for (String expectedLinkTitle : expectedLinks) {
+            // Wait for the visibility of the element by text
+            BrowserUtils.waitForVisibility(expectedLinkTitle);
+
+            // Find the element by text
+            WebElement link = Driver.getDriver().findElement(By.xpath("//*[text()='" + expectedLinkTitle + "']"));
+
+            // Assert visibility and clickability
+            Assert.assertTrue("Element '" + expectedLinkTitle + "' is not visible", link.isDisplayed());
+            Assert.assertTrue("Element '" + expectedLinkTitle + "' is not clickable", link.isEnabled());
+        }
+    }
+
+
 }

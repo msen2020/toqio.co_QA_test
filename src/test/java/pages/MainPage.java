@@ -20,8 +20,29 @@ public class MainPage extends CommonPage {
     @FindBy(xpath = "(//ul[@class='active-branch'])[1]/li")
     public List<WebElement> navigationMenu;
 
-    @FindBy(xpath = "")
-    public WebElement aa;
+    @FindBy(xpath = "(//a[@href='javascript:;'])[2]")
+    public WebElement companyLink;
+
+    @FindBy(xpath = "(//ul[@class='hs-menu-children-wrapper'])[1]/li")
+    public List<WebElement> companyMenuLinks;
+
+    @FindBy(xpath = "(//a[@href='javascript:;'])[3]")
+    public WebElement resourcesLink;
+
+    @FindBy(css = ".hs-menu-item.hs-menu-depth-1.active.active-branch:nth-child(1)")
+    public WebElement homeLinkFooter;
+
+    @FindBy(xpath = "//div[@class='flex_row  ']/div")
+    public List<WebElement> footerMenuList;
+
+    @FindBy(css = ".footer-logo img")
+    public WebElement logoLocator;
+
+    @FindBy(css = ".footer-content div:nth-child(2) div")
+    public WebElement copyrightLocator;
+
+    @FindBy(css = ".footer-social-item")
+    public WebElement socialMediaLinksLocator;
 
     @FindBy(xpath = "")
     public WebElement aaa;

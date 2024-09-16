@@ -6,7 +6,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import pages.CommonPage;
 import utilities.BrowserUtils;
@@ -73,8 +72,6 @@ public class MainPage_stepDef extends CommonPage {
         List<String> expectedTitles = dataTable.asList();
         List<WebElement> titleElements = driver.findElements(By.cssSelector("h1, h2, h3, h4, span"));
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
         // Verify each expected title
         for (String expectedTitle : expectedTitles) {
             boolean found = false;
@@ -82,7 +79,7 @@ public class MainPage_stepDef extends CommonPage {
                 String actualTitle = element.getText().trim().replaceAll("\\s+", " "); // Trim and normalize whitespace
                 if (actualTitle.equals(expectedTitle.trim().replaceAll("\\s+", " "))) {
                     // Scroll to the element before verifying visibility
-                    BrowserUtils.scrollToElement(js, element);
+                    BrowserUtils.scrollToElement(driver, element);
                     BrowserUtils.waitForVisibility(element);
 
                     Assert.assertTrue("Element '" + expectedTitle + "' is not visible", element.isDisplayed());
@@ -203,47 +200,61 @@ public class MainPage_stepDef extends CommonPage {
         }
     }
 
-    @When("user clicks the Footer Item {string}")
-    public void userClicksTheFooterItem(String link) {
-        WebElement linkElement = driver.findElement(By.xpath("//div[@class='flex_row  ']//div/ul/li"));
+    @When("user clicks the Footer Item Links {string}")
+    public void userClicksTheFooterItemLinks(String link) {
         BrowserUtils.waitForPageToLoad(25);
         BrowserUtils.scrollToBottom();
-        // Wait for element clickability before clicking
-        BrowserUtils.waitForClickability(linkElement);
-        // Click with handling of stale element exceptions
-//        BrowserUtils.staleElementClick(linkElement, 5);
-        BrowserUtils.waitAndClick(linkElement,5);
+
+        // Get all footer links
+        List<WebElement> linkElements = driver.findElements(By.xpath("//div[@class='flex_row  ']//div/ul/li"));
+
+        // Iterate through the footer items to match the correct link text
+        for (WebElement linkElement : linkElements) {
+            String linkText = linkElement.getText().trim();
+
+            if (linkText.equals(link)) {
+                // Wait for element clickability and click
+                BrowserUtils.waitForClickability(linkElement);
+                BrowserUtils.wait(2);
+//                BrowserUtils.staleElementClick(linkElement, 5);
+                linkElement.click();
+                // Break after clicking the correct footer item
+                break;
+            }
+        }
     }
 
-    @Then("user verifies the directed {string}")
-    public void userVerifiesTheDirected(String url) {
+    @Then("user verifies the directed URL {string}")
+    public void userVerifiesTheDirectedUrl(String url) {
         // Verify the current URL after navigation
+        BrowserUtils.waitForPageToLoad(10);
         String currentUrl = driver.getCurrentUrl();
+
         if (!currentUrl.equals(url)) {
             throw new AssertionError("Expected URL: " + url + ", but got: " + currentUrl);
         }
+
         System.out.println("Navigated to URL: " + currentUrl);
     }
 
-    @Then("user verifies the {string} of the page")
-    public void userVerifiesTheOfThePage(String title) {
+    @Then("user verifies the titles {string} of the page")
+    public void userVerifiesTheTitlesOfThePage(String title) {
+        // Wait for the page to load
+        BrowserUtils.waitForPageToLoad(10);
+
         // Collect all title elements on the page (h1, h2, h3, h4, span)
         List<WebElement> titleElements = driver.findElements(By.cssSelector("h1, h2, h3, h4, span"));
-
-        // Use JavascriptExecutor for scrolling
-        JavascriptExecutor js = (JavascriptExecutor) driver;
 
         // Trim and normalize expected title whitespace
         String expectedTitle = title.trim().replaceAll("\\s+", " ");
         boolean found = false;
 
         // Iterate through the title elements to find the expected title
-        for (
-                WebElement element : titleElements) {
+        for (WebElement element : titleElements) {
             String actualTitle = element.getText().trim().replaceAll("\\s+", " ");
             if (actualTitle.equals(expectedTitle)) {
                 // Scroll to the element before verifying visibility
-                BrowserUtils.scrollToElement(js, element);
+                BrowserUtils.scrollToElement(driver, element);
                 BrowserUtils.waitForVisibility(element);
 
                 // Assert the element is displayed
@@ -251,6 +262,7 @@ public class MainPage_stepDef extends CommonPage {
                 found = true;
                 break;
             }
+            System.out.println(title);
         }
 
         // If title is not found, throw an assertion failure
@@ -258,6 +270,4 @@ public class MainPage_stepDef extends CommonPage {
             Assert.fail("Expected title '" + expectedTitle + "' was not found on the page");
         }
     }
-
-
 }

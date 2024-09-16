@@ -6,7 +6,11 @@
 # 5. Scroll down and check the footer content, ensuring links (e.g., Privacy Policy, Contact Us) are present and functional.
 # 6. Confirm that dynamic content, if any (such as testimonials or featured products/services), loads and displays as expected.
 
-Feature: Verify Homepage Load and Content Display
+@regression_01
+@QA_MSEN
+@home
+@HP_01
+Feature: HP_01 Verify Homepage Load and Content Display
 
   Background: User lands on the Main Page
     Given user lands on the Main Page
@@ -80,9 +84,9 @@ Feature: Verify Homepage Load and Content Display
       | Terms of use   |
 
   Scenario Outline: HP_01 TC_06 verify Footer Item links directed correctly
-    When user clicks the Footer Item "<links>"
-    Then user verifies the directed "<pages>"
-    Then user verifies the "<titles>" of the page
+    When user clicks the Footer Item Links "<links>"
+    Then user verifies the directed URL "<pages>"
+    Then user verifies the titles "<titles>" of the page
     Examples:
       | links          | pages                           | titles                                                            |
       | Home           | https://toqio.co/               | Empower your distribution network for optimal performance         |

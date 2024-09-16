@@ -2,7 +2,6 @@ package utilities;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -84,18 +83,30 @@ public class BrowserUtils {
         }
     }
 
-    public static void scrollToBottom() {
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,document.body.scrollHeight)");
-        wait(2);
-    }
-
     public static void scrollToElement(WebElement element) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
         BrowserUtils.waitForVisibility(element, 10);
     }
 
-    public static void scrollToElement(JavascriptExecutor js, WebElement element) {
+    public static void scrollToBottom() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,document.body.scrollHeight)");
+        wait(2);
+    }
+
+    public static void scrollToElement(WebDriver driver, WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    public static void scrollToElementAndClick(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+        element.click();
+    }
+
+    public static void clickWithJS(WebElement element) {
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
     }
 
     public static void staleElementClick(WebElement element, int timeout) {
@@ -131,10 +142,5 @@ public class BrowserUtils {
         }
     }
 
-    public static void performTabAction(Actions actions, int x) {
-        for (int i = 0; i < x; i++) {
-            actions.sendKeys(Keys.TAB).perform();
-        }
-    }
 }
 

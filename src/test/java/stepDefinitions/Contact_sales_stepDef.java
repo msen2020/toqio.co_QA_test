@@ -60,7 +60,7 @@ public class Contact_sales_stepDef extends CommonPage {
         if (iframes.size() >= 8) {
             driver.switchTo().frame(iframes.get(7));
         } else {
-            System.out.println("There are fewer than 8 iframes on the page.");
+            System.out.println(iframes.size() + " iframes were found");
         }
         contactSales().firstnameInbox.sendKeys("Mehmet");
     }
@@ -92,9 +92,10 @@ public class Contact_sales_stepDef extends CommonPage {
 
     @And("user selects a country from the Headquartered in inbox")
     public void userSelectsACountryFromTheHeadquarteredInInbox() {
-        BrowserUtils.waitAndClick(contactSales().location_of_headquartersInbox,1);
+        BrowserUtils.waitAndClick(contactSales().location_of_headquartersInbox, 2);
         Select select = new Select(contactSales().location_of_headquartersInbox);
         select.selectByValue("Spain");
+//        actions.sendKeys(Keys.TAB).build().perform();
     }
 
     @And("user fills the How did you hear about us? inbox")
@@ -106,13 +107,18 @@ public class Contact_sales_stepDef extends CommonPage {
 
     @And("user checks the Agreement checkbox")
     public void userChecksTheAgreementCheckbox() {
-        BrowserUtils.waitAndClick(contactSales().agreementCheckbox,2);
+        BrowserUtils.waitAndClick(contactSales().agreementCheckbox, 2);
     }
 
     @And("user checks the subscription checkbox")
     public void userChecksTheSubscriptionCheckbox() {
-        BrowserUtils.waitAndClick(contactSales().subscriptionCheckbox,2);
+        BrowserUtils.waitAndClick(contactSales().subscriptionCheckbox, 2);
     }
 
-
+    @And("user clicks the button Send")
+    public void userClicksTheButtonSend() {
+        BrowserUtils.scrollToElement(driver, contactSales().sendButton);
+        BrowserUtils.waitForClickability(contactSales().sendButton);
+        contactSales().sendButton.click();
+    }
 }

@@ -13,7 +13,7 @@ public class Contact_salesPage extends CommonPage {
     @FindBy(css = "iframe[src*='hs-web-interactive']")
     public WebElement iframeElement;
 
-    @FindBy(xpath = "//div[@id='hs_form_target_widget_1714472343596']/form")
+    @FindBy(xpath = "//iframe[@title='recaptcha challenge expires in two minutes']")
     public WebElement iframeElement2;
 
     @FindBy(tagName = "h1")
@@ -50,5 +50,5 @@ public class Contact_salesPage extends CommonPage {
     public WebElement subscriptionCheckbox;
 
     @FindBy(xpath = "//input[@type='submit']")
-    public WebElement submitButton;
+    public WebElement sendButton;
 }

@@ -2,15 +2,13 @@ package utilities;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 import static stepDefinitions.Hooks.driver;
 
@@ -117,31 +115,26 @@ public class BrowserUtils {
         }
     }
 
-    public static void clickAndVerify(WebDriver driver, By linkLocator, String expectedUrl) {
-        driver.findElement(linkLocator).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlToBe(expectedUrl));
-        if (driver.getCurrentUrl().equals(expectedUrl)) {
-            System.out.println("Link verified: " + linkLocator + " leads to " + expectedUrl);
-        } else {
-            System.out.println("Error! Link " + linkLocator + " does not lead to " + expectedUrl);
+    public static void switchToNewTab(WebDriver driver) {
+        // Get the current window handle (the parent window)
+        String parentWindowHandle = driver.getWindowHandle();
+
+        // Get all available window handles
+        Set<String> windowHandles = driver.getWindowHandles();
+
+        // Iterate through each handle and switch to the new tab/window
+        for (String windowHandle : windowHandles) {
+            if (!windowHandle.equals(parentWindowHandle)) {
+                driver.switchTo().window(windowHandle);
+                break; // Switched to the new tab, so exit the loop
+            }
         }
     }
 
-    public static Map<String, String> readExpectedUrlsFromFile(String filename) throws Exception {
-        Map<String, String> urls = new HashMap<>();
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("=");
-            if (parts.length == 2) {
-                urls.put(parts[0].trim(), parts[1].trim());
-            } else {
-                System.out.println("Invalid line in expected_urls.txt: " + line);
-            }
+    public static void performTabAction(Actions actions, int x) {
+        for (int i = 0; i < x; i++) {
+            actions.sendKeys(Keys.TAB).perform();
         }
-        reader.close();
-        return urls;
     }
 }
 

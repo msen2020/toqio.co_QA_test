@@ -6,12 +6,28 @@
 # 5. Check for any success messages (e.g., “Thank you for your submission”).
 # 6. Confirm the data is correctly stored or processed by verifying it on the backend or through confirmation emails (if available).
 
-Feature:
+Feature: user fills the Contact us now form
 
 
   Background: User lands on the Main Page
     Given user lands on the Main Page
-
-  Scenario:
     When user clicks the button Request Demo
-    Then user verifies the URL of the page is "https://toqio.co/contact-sales/"
+    Then user verifies the URL of the new tab is "https://toqio.co/contact-sales/"
+
+  Scenario: TC_01
+    Then user verifies the title Contact us now! appears
+    Then user verifies the Contact us inboxes and checkboxes are functional
+
+
+    Scenario: TC_02
+    And user fills the First name inbox
+    And user fills the Last name inbox
+    And user fills the Email inbox
+    And user fills the Phone number inbox
+    And user fills the Company name inbox
+    And user fills the Country_Region inbox
+    And user selects a country from the Headquartered in inbox
+    And user fills the How did you hear about us? inbox
+    And user checks the Agreement checkbox
+    And user checks the subscription checkbox
+

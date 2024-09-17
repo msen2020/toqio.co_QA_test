@@ -41,12 +41,15 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Toqio in the news                                                                 |
 
   Scenario Outline: HP_01 TC_02 verify correct pages open when clicked
-    Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
+#    Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
+    When user clicks the Header Item Links "<links>"
+    Then user verifies the directed URL "<pages>"
+    Then user verifies the titles "<titles>" of the page
     Examples:
-      | links     | pages                      |
-      | Home      | https://toqio.co/          |
-      | Platform  | https://toqio.co/platform  |
-      | Use Cases | https://toqio.co/use-cases |
+      | links     | pages                      | titles                                                    |
+      | Home      | https://toqio.co/          | Empower your distribution network for optimal performance |
+      | Platform  | https://toqio.co/platform  | The Toqio platform                                        |
+      | Use Cases | https://toqio.co/use-cases | Use cases                                                 |
 
   Scenario: HP_01 TC_03 verify the Company related links appear and functional
     When user hovers over the link Company

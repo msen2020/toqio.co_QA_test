@@ -93,6 +93,17 @@ public class MainPage_stepDef extends CommonPage {
         }
     }
 
+    @When("user clicks the Header Item Links {string}")
+    public void userClicksTheHeaderItemLinks(String link) {
+        WebElement linkElement = driver.findElement(By.linkText(link));
+        // Wait for element visibility before click
+        BrowserUtils.waitForVisibility(linkElement);
+
+        // Click with handling of stale element
+        BrowserUtils.staleElementClick(linkElement, 5);
+
+    }
+
     @Then("user clicks the {string} in the navigation bar and verifies they lead to the correct {string}")
     public void userClicksTheInTheNavigationBarAndVerifiesTheyLeadToTheCorrect(String link, String url) {
         WebElement linkElement = driver.findElement(By.linkText(link));
@@ -232,6 +243,9 @@ public class MainPage_stepDef extends CommonPage {
         String expectedTitle = title.trim().replaceAll("\\s+", " ");
         boolean found = false;
 
+        // Print the expected title once
+        System.out.println(expectedTitle);
+
         // Iterate through the title elements to find the expected title
         for (WebElement element : titleElements) {
             String actualTitle = element.getText().trim().replaceAll("\\s+", " ");
@@ -245,7 +259,6 @@ public class MainPage_stepDef extends CommonPage {
                 found = true;
                 break;
             }
-            System.out.println(title);
         }
 
         // If title is not found, throw an assertion failure

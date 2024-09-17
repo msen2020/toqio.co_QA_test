@@ -29,9 +29,6 @@ public class MainPage extends CommonPage {
     @FindBy(xpath = "(//a[@href='javascript:;'])[3]")
     public WebElement resourcesLink;
 
-    @FindBy(xpath = "//div[@class='flex_row  ']//div/ul/li")
-    public List<WebElement> footerMenuList;
-
     @FindBy(css = ".footer-logo img")
     public WebElement logoLocatorOnFooter;
 

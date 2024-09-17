@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.Random;
 
 import pages.CommonPage;
+import utilities.BrowserUtils;
 import utilities.Driver;
 
 public class Hooks extends CommonPage {
@@ -39,6 +40,7 @@ public class Hooks extends CommonPage {
         // Add your logic to navigate to the base URL here
         driver.get(baseUrl);
         acceptCookies(driver);
+        BrowserUtils.storeParentWindowHandle(driver);
     }
 
     @After

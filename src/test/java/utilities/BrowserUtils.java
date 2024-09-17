@@ -142,6 +142,16 @@ public class BrowserUtils {
         }
     }
 
+    private static String parentWindowHandle;
+
+    public static void storeParentWindowHandle(WebDriver driver) {
+        parentWindowHandle = driver.getWindowHandle();
+    }
+
+    public static void switchToDefaultTab(WebDriver driver) {
+        driver.switchTo().window(parentWindowHandle);
+    }
+
     public static void staleElementSolutionForVisibility(WebElement element) {
         Duration timeout = Duration.ofSeconds(30);
         new WebDriverWait(driver, timeout)

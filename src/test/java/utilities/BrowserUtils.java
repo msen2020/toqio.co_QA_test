@@ -24,11 +24,6 @@ public class BrowserUtils {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static void waitForVisibility(WebElement element, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeToWaitInSec));
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
     public static void waitForClickability(WebElement element) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(element));

@@ -4,7 +4,6 @@
 # 3. Check that the company logo, main banner, and navigation menu are visible.
 # 4. Ensure that the links in the navigation bar (e.g., "Home," "About Us," "Services") are clickable and lead to the correct pages.
 # 5. Scroll down and check the footer content, ensuring links (e.g., Privacy Policy, Contact Us) are present and functional.
-# 6. Confirm that dynamic content, if any (such as testimonials or featured products/services), loads and displays as expected.
 
 @regression_01
 @QA_MSEN
@@ -41,12 +40,15 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Toqio in the news                                                                 |
 
   Scenario Outline: HP_01 TC_02 verify correct pages open when clicked
-    Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
+#    Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
+    When user clicks the Header Item Links "<links>"
+    Then user verifies the directed URL "<pages>"
+    Then user verifies the titles "<titles>" of the page
     Examples:
-      | links     | pages                      |
-      | Home      | https://toqio.co/          |
-      | Platform  | https://toqio.co/platform  |
-      | Use Cases | https://toqio.co/use-cases |
+      | links     | pages                      | titles                                                    |
+      | Home      | https://toqio.co/          | Empower your distribution network for optimal performance |
+      | Platform  | https://toqio.co/platform  | The Toqio platform                                        |
+      | Use Cases | https://toqio.co/use-cases | Use cases                                                 |
 
   Scenario: HP_01 TC_03 verify the Company related links appear and functional
     When user hovers over the link Company
@@ -103,6 +105,3 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Cookies        | https://toqio.co/cookies        | Cookie information                                                |
       | Legal notice   | https://toqio.co/legal-notice   | Legal notice                                                      |
       | Terms of use   | https://toqio.co/terms-of-use   | Terms of use                                                      |
-
-
-#  6. Confirm that dynamic content, if any (such as testimonials or featured products/services), loads and displays as expected.

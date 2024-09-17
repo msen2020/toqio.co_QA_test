@@ -1,3 +1,4 @@
+# CS_01 user fills the Contact us now form
 # Test Steps:
 # 1. Navigate to the contact or subscription page on https://toqio.co/.
 # 2. Fill out the required fields (e.g., name, email, message).
@@ -15,15 +16,22 @@ Feature: CS_01 user fills the Contact us now form
   Background: User lands on the Main Page
     Given user lands on the Main Page
     When user clicks the button Request Demo
-    Then user verifies the URL of the new tab is "https://toqio.co/contact-sales/"
+    And user switches to the new tab
+    Then user verifies the title Contact us now! appears
 
   Scenario: CS_01 TC_01
-    Then user verifies the title Contact us now! appears
     Then user verifies the Contact us inboxes and checkboxes are functional
+    Then user verifies the URL of the new tab is "https://toqio.co/contact-sales/"
+    And user clicks the button Send on the Contact Us page
+    Then user verifies the Error Messages on the required fields
+  | Please complete this required field. |
+  | Please complete all required fields. |
+    And user switches to the default tab
+
 
   @bug
   Scenario: CS_01 TC_02
-# There is a bug on Email inbox. It doesn't accept any kinds of email
+  // TODO: There is a bug on Email inbox. It doesn't accept any kinds of email
     And user fills the First name inbox
     And user fills the Last name inbox
     And user fills the Email inbox
@@ -35,4 +43,5 @@ Feature: CS_01 user fills the Contact us now form
     And user checks the Agreement checkbox
     And user checks the subscription checkbox
     And user clicks the button Send
+
 

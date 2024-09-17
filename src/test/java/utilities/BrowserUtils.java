@@ -24,11 +24,6 @@ public class BrowserUtils {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static void waitForVisibility(WebElement element, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeToWaitInSec));
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
     public static void waitForClickability(WebElement element) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -83,10 +78,6 @@ public class BrowserUtils {
         }
     }
 
-    public static void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        BrowserUtils.waitForVisibility(element, 10);
-    }
 
     public static void scrollToBottom() {
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,document.body.scrollHeight)");
@@ -96,17 +87,6 @@ public class BrowserUtils {
     public static void scrollToElement(WebDriver driver, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", element);
-    }
-
-    public static void scrollToElementAndClick(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
-        element.click();
-    }
-
-    public static void clickWithJS(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
     }
 
     public static void staleElementClick(WebElement element, int timeout) {
@@ -142,5 +122,14 @@ public class BrowserUtils {
         }
     }
 
+    private static String parentWindowHandle;
+
+    public static void storeParentWindowHandle(WebDriver driver) {
+        parentWindowHandle = driver.getWindowHandle();
+    }
+
+    public static void switchToDefaultTab(WebDriver driver) {
+        driver.switchTo().window(parentWindowHandle);
+    }
 }
 

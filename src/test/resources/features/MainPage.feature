@@ -4,7 +4,6 @@
 # 3. Check that the company logo, main banner, and navigation menu are visible.
 # 4. Ensure that the links in the navigation bar (e.g., "Home," "About Us," "Services") are clickable and lead to the correct pages.
 # 5. Scroll down and check the footer content, ensuring links (e.g., Privacy Policy, Contact Us) are present and functional.
-# 6. Confirm that dynamic content, if any (such as testimonials or featured products/services), loads and displays as expected.
 
 @regression_01
 @QA_MSEN
@@ -106,6 +105,3 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Cookies        | https://toqio.co/cookies        | Cookie information                                                |
       | Legal notice   | https://toqio.co/legal-notice   | Legal notice                                                      |
       | Terms of use   | https://toqio.co/terms-of-use   | Terms of use                                                      |
-
-
-#  6. Confirm that dynamic content, if any (such as testimonials or featured products/services), loads and displays as expected.

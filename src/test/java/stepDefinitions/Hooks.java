@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.Random;
 
 import pages.CommonPage;
 import utilities.BrowserUtils;
@@ -25,7 +24,6 @@ public class Hooks extends CommonPage {
     public static WebDriver driver; // Declare WebDriver instance in Hooks class
     public static String baseUrl;
     public static Actions actions;
-    public static Random random = new Random();
 
     @Before(order = 1)
     public void setUp() {

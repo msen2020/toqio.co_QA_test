@@ -83,10 +83,6 @@ public class BrowserUtils {
         }
     }
 
-    public static void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        BrowserUtils.waitForVisibility(element, 10);
-    }
 
     public static void scrollToBottom() {
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,document.body.scrollHeight)");
@@ -96,17 +92,6 @@ public class BrowserUtils {
     public static void scrollToElement(WebDriver driver, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", element);
-    }
-
-    public static void scrollToElementAndClick(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
-        element.click();
-    }
-
-    public static void clickWithJS(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
     }
 
     public static void staleElementClick(WebElement element, int timeout) {
@@ -150,19 +135,6 @@ public class BrowserUtils {
 
     public static void switchToDefaultTab(WebDriver driver) {
         driver.switchTo().window(parentWindowHandle);
-    }
-
-    public static void staleElementSolutionForVisibility(WebElement element) {
-        Duration timeout = Duration.ofSeconds(30);
-        new WebDriverWait(driver, timeout)
-                .ignoring(StaleElementReferenceException.class)
-                .until((WebDriver d) -> {
-                    try {
-                        return element.isDisplayed(); // Elementin görünür olup olmadığını kontrol et
-                    } catch (StaleElementReferenceException e) {
-                        return false; // Stale element hatası alınırsa false döner ve yeniden dener
-                    }
-                });
     }
 }
 

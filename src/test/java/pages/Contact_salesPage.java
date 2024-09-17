@@ -165,6 +165,7 @@ public class Contact_salesPage extends CommonPage {
         BrowserUtils.scrollToBottom();
         BrowserUtils.scrollToElement(driver, contactSales().sendButton);
         BrowserUtils.waitForClickability(contactSales().sendButton);
+        BrowserUtils.verifyElementClickable(contactSales().sendButton);
         contactSales().sendButton.click();
     }
 }

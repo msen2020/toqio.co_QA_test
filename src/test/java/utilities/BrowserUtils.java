@@ -142,5 +142,17 @@ public class BrowserUtils {
         }
     }
 
+    public static void staleElementSolutionForVisibility(WebElement element) {
+        Duration timeout = Duration.ofSeconds(30);
+        new WebDriverWait(driver, timeout)
+                .ignoring(StaleElementReferenceException.class)
+                .until((WebDriver d) -> {
+                    try {
+                        return element.isDisplayed(); // Elementin görünür olup olmadığını kontrol et
+                    } catch (StaleElementReferenceException e) {
+                        return false; // Stale element hatası alınırsa false döner ve yeniden dener
+                    }
+                });
+    }
 }
 

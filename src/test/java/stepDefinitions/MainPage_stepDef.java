@@ -204,24 +204,7 @@ public class MainPage_stepDef extends CommonPage {
     public void userClicksTheFooterItemLinks(String link) {
         BrowserUtils.waitForPageToLoad(25);
         BrowserUtils.scrollToBottom();
-
-        // Get all footer links
-        List<WebElement> linkElements = driver.findElements(By.xpath("//div[@class='flex_row  ']//div/ul/li"));
-
-        // Iterate through the footer items to match the correct link text
-        for (WebElement linkElement : linkElements) {
-            String linkText = linkElement.getText().trim();
-
-            if (linkText.equals(link)) {
-                // Wait for element clickability and click
-                BrowserUtils.waitForClickability(linkElement);
-                BrowserUtils.wait(2);
-//                BrowserUtils.staleElementClick(linkElement, 5);
-                linkElement.click();
-                // Break after clicking the correct footer item
-                break;
-            }
-        }
+        mainPage().footerLinkElement(link);
     }
 
     @Then("user verifies the directed URL {string}")

@@ -1,3 +1,4 @@
+# CS_01 user fills the Contact us now form
 # Test Steps:
 # 1. Navigate to the contact or subscription page on https://toqio.co/.
 # 2. Fill out the required fields (e.g., name, email, message).
@@ -23,7 +24,7 @@ Feature: CS_01 user fills the Contact us now form
 
   @bug
   Scenario: CS_01 TC_02
-# There is a bug on Email inbox. It doesn't accept any kinds of email
+  // TODO: There is a bug on Email inbox. It doesn't accept any kinds of email
     And user fills the First name inbox
     And user fills the Last name inbox
     And user fills the Email inbox
@@ -35,4 +36,8 @@ Feature: CS_01 user fills the Contact us now form
     And user checks the Agreement checkbox
     And user checks the subscription checkbox
     And user clicks the button Send
+
+  Scenario: CS_01 TC_02
+    And user clicks the button Send
+    Then user verifies the Error Messages "Please complete this required field." on the required fields
 

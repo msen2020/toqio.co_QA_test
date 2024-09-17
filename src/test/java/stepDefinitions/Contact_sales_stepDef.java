@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import pages.CommonPage;
 import utilities.BrowserUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static stepDefinitions.Hooks.actions;
@@ -42,15 +43,26 @@ public class Contact_sales_stepDef extends CommonPage {
 
     @Then("user verifies the Contact us inboxes and checkboxes are functional")
     public void userVerifiesTheContactUsInboxesAndCheckboxesAreFunctional() {
-        BrowserUtils.verifyElementClickable(contactSales().firstnameInbox);
-        BrowserUtils.verifyElementClickable(contactSales().lastnameInbox);
-        BrowserUtils.verifyElementClickable(contactSales().emailInbox);
-        BrowserUtils.verifyElementClickable(contactSales().phoneNumberInbox);
-        BrowserUtils.verifyElementClickable(contactSales().companyNameInbox);
-        BrowserUtils.verifyElementClickable(contactSales().country_RegionInbox);
-        BrowserUtils.verifyElementClickable(contactSales().location_of_headquartersInbox);
-        BrowserUtils.verifyElementClickable(contactSales().agreementCheckbox);
-        BrowserUtils.verifyElementClickable(contactSales().subscriptionCheckbox);
+        List<WebElement> elementsToCheck = Arrays.asList(
+                contactSales().firstnameInbox,
+                contactSales().lastnameInbox,
+                contactSales().emailInbox,
+                contactSales().phoneNumberInbox,
+                contactSales().companyNameInbox,
+                contactSales().country_RegionInbox,
+                contactSales().location_of_headquartersInbox,
+                contactSales().agreementCheckbox,
+                contactSales().subscriptionCheckbox
+        );
+
+        for (WebElement element : elementsToCheck) {
+            verifyElementFunctional(element);
+        }
+    }
+
+    private void verifyElementFunctional(WebElement element) {
+        Assert.assertTrue("Element is not displayed", element.isDisplayed());
+        Assert.assertTrue("Element is not enabled", element.isEnabled());
     }
 
     @And("user fills the First name inbox")
@@ -120,5 +132,15 @@ public class Contact_sales_stepDef extends CommonPage {
         BrowserUtils.scrollToElement(driver, contactSales().sendButton);
         BrowserUtils.waitForClickability(contactSales().sendButton);
         contactSales().sendButton.click();
+    }
+
+    @Then("user verifies the Error Messages {string} on the required fields")
+    public void userVerifiesTheErrorMessagesOnTheRequiredFields(String arg0) {
+//        List<WebElement> errorMessages = driver.findElements(By.xpath("//label[@class='hs-error-msg hs-main-font-element']"));
+        for (WebElement errorMessage : contactSales().errorMessages){
+//            BrowserUtils.waitForVisibility(contactSales().errorMessages);
+//            BrowserUtils.verifyElementDisplayed(contactSales().errorMessages);
+        }
+
     }
 }

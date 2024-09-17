@@ -1,9 +1,12 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+
+import static stepDefinitions.Hooks.driver;
 
 
 public class MainPage extends CommonPage {
@@ -38,12 +41,9 @@ public class MainPage extends CommonPage {
     @FindBy(css = ".footer-social")
     public WebElement socialMediaLinksLocator;
 
-
-
-
-
-
-
-
-
+    public void footerLinkElement(String linkTest) {
+        WebElement footerLink = driver.findElement(By.xpath("//footer//a[text()= '" + linkTest + "']"));
+        footerLink.click();
+    }
 }
+

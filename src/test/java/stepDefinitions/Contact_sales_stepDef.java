@@ -136,16 +136,6 @@ public class Contact_sales_stepDef extends CommonPage {
         contactSales().sendButton.click();
     }
 
-    @Then("user verifies the Error Messages {string} on the required fields")
-    public void userVerifiesTheErrorMessagesOnTheRequiredFields(String arg0) {
-        List<WebElement> errorMessages = driver.findElements(By.xpath("//label[@class='hs-error-msg hs-main-font-element']"));
-//        for (WebElement errorMessage : contactSales().errorMessage1) {
-//            BrowserUtils.waitForVisibility(contactSales().errorMessage1);
-//            BrowserUtils.verifyElementDisplayed(contactSales().errorMessage1);
-//        }
-
-    }
-
     @Then("user verifies the Error Messages on the required fields")
     public void userVerifiesTheErrorMessagesOnTheRequiredFields(DataTable dataTable) {
         List<String> expectedMessages = dataTable.asList();

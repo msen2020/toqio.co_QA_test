@@ -50,5 +50,8 @@ public class Contact_salesPage extends CommonPage {
     public WebElement sendButton;
 
     @FindBy(xpath = "//label[@class='hs-error-msg hs-main-font-element']")
-    public List<WebElement> errorMessages;
+    public WebElement errorMessage1;
+
+    @FindBy(xpath = "//label[@class='hs-main-font-element']")
+    public WebElement errorMessage2;
 }

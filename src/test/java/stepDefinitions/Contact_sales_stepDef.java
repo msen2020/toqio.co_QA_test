@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -129,6 +130,7 @@ public class Contact_sales_stepDef extends CommonPage {
 
     @And("user clicks the button Send")
     public void userClicksTheButtonSend() {
+        actions.sendKeys(Keys.PAGE_DOWN).build().perform();
         BrowserUtils.scrollToElement(driver, contactSales().sendButton);
         BrowserUtils.waitForClickability(contactSales().sendButton);
         contactSales().sendButton.click();
@@ -137,10 +139,44 @@ public class Contact_sales_stepDef extends CommonPage {
     @Then("user verifies the Error Messages {string} on the required fields")
     public void userVerifiesTheErrorMessagesOnTheRequiredFields(String arg0) {
         List<WebElement> errorMessages = driver.findElements(By.xpath("//label[@class='hs-error-msg hs-main-font-element']"));
-        for (WebElement errorMessage : contactSales().errorMessages) {
-//            BrowserUtils.waitForVisibility(contactSales().errorMessages);
-//            BrowserUtils.verifyElementDisplayed(contactSales().errorMessages);
+//        for (WebElement errorMessage : contactSales().errorMessage1) {
+//            BrowserUtils.waitForVisibility(contactSales().errorMessage1);
+//            BrowserUtils.verifyElementDisplayed(contactSales().errorMessage1);
+//        }
+
+    }
+
+    @Then("user verifies the Error Messages on the required fields")
+    public void userVerifiesTheErrorMessagesOnTheRequiredFields(DataTable dataTable) {
+        List<String> expectedMessages = dataTable.asList();
+        List<WebElement> errorElements = Arrays.asList(contactSales().errorMessage1, contactSales().errorMessage2);
+
+        for (String expectedMessage : expectedMessages) {
+            boolean messageFound = false;
+            for (WebElement errorElement : errorElements) {
+                if (errorElement.isDisplayed() && errorElement.getText().equals(expectedMessage)) {
+                    messageFound = true;
+                    break;
+                }
+            }
+            Assert.assertTrue("Error message not found: " + expectedMessage, messageFound);
         }
 
+        System.out.println("All expected error messages are displayed and verified: " + expectedMessages);
+    }
+
+    @And("user clicks the button Send on the Contact Us page")
+    public void userClicksTheButtonSendOnTheContactUsPage() {
+        List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+
+        if (iframes.size() >= 8) {
+            driver.switchTo().frame(iframes.get(7));
+        } else {
+            System.out.println(iframes.size() + " iframes were found");
+        }
+        BrowserUtils.scrollToBottom();
+        BrowserUtils.scrollToElement(driver, contactSales().sendButton);
+        BrowserUtils.waitForClickability(contactSales().sendButton);
+        contactSales().sendButton.click();
     }
 }

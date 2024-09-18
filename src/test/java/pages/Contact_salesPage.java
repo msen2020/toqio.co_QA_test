@@ -75,8 +75,7 @@ public class Contact_salesPage extends CommonPage {
     }
 
     public void verifyUrlOnTheNewTab(String url) {
-//        BrowserUtils.switchToNewTab(driver);
-        BrowserUtils.wait(3);
+        BrowserUtils.wait(1);
         BrowserUtils.waitForPageToLoad(25);
         String currentUrl = driver.getCurrentUrl();
         Assert.assertEquals("The current URL doesn't match the expected URL", url, currentUrl);

@@ -116,7 +116,6 @@ public class MainPage extends CommonPage {
 
         // Click with handling of stale element
         BrowserUtils.staleElementClick(linkElement, 5);
-
     }
 
     public void clickLinksInNavigationBar(String link, String url) {
@@ -180,6 +179,24 @@ public class MainPage extends CommonPage {
                 Assert.fail("Element '" + expectedLinkTitles + "' is not found in the navigation menu");
             }
         }
+    }
+
+    public void clickCompanyRelatedItemLinks(String link) {
+        WebElement linkElement = driver.findElement(By.linkText(link));
+        // Wait for element visibility before click
+        BrowserUtils.waitForVisibility(linkElement);
+
+        // Click with handling of stale element
+        BrowserUtils.staleElementClick(linkElement, 5);
+    }
+
+    public void clickResourcesRelatedItemLinks(String link) {
+        WebElement linkElement = driver.findElement(By.linkText(link));
+        // Wait for element visibility before click
+        BrowserUtils.waitForVisibility(linkElement);
+
+        // Click with handling of stale element
+        BrowserUtils.staleElementClick(linkElement, 5);
     }
 
     public void verifyResourcesLinks(DataTable dataTable) {

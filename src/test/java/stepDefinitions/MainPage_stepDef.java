@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -112,5 +113,48 @@ public class MainPage_stepDef extends CommonPage {
     @Then("user verifies the titles {string} of the page")
     public void userVerifiesTheTitlesOfThePage(String title) {
         mainPage().verifyTitleOfPage(title);
+    }
+
+    @Then("user verifies language icon visible and functional")
+    public void userVerifiesLanguageIconVisibleAndFunctional() {
+        BrowserUtils.verifyElementDisplayed(mainPage().languageIcon);
+    }
+
+    @And("user hovers over the Language Icon")
+    public void userHoversOverTheLanguageIcon() {
+        mainPage().hoverOverTheLanguageIcon();
+    }
+
+    @Then("user verifies English and Spanish language icons are visible and functional")
+    public void userVerifiesEnglishAndSpanishLanguageIconsAreVisibleAndFunctional() {
+        mainPage().verifyLanguageIconsVisibleAndFunctional();
+    }
+
+    @When("user selects the Spanish Language option")
+    public void userSelectsTheSpanishLanguageOption() {
+        mainPage().userSelectsSpanishLanguage();
+    }
+
+    @Then("user verifies the title {string} appears")
+    public void userVerifiesTheTitleAppears(String expectedTitle) {
+        mainPage().verifyTitleAppears(expectedTitle);
+    }
+
+    @And("user selects the English Language option")
+    public void userSelectsTheEnglishLanguageOption() {
+        mainPage().userSelectsEnglishLanguage();
+    }
+
+    @Then("user verifies the button Connect Us is visible and functional")
+    public void userVerifiesTheButtonConnectUsIsVisibleAndFunctional() {
+        mainPage().verifyConnectUsButton();
+    }
+
+    @When("user checks if the language is English")
+    public void userChecksIfTheLanguageIsEnglish() {
+        if (!mainPage().languageIcon.getAttribute("lang").contains("en")) {
+            mainPage().languageIcon.click();
+            mainPage().englishOption.click();
+        }
     }
 }

@@ -126,3 +126,15 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Cookies        | https://toqio.co/cookies        | Cookie information                                                |
       | Legal notice   | https://toqio.co/legal-notice   | Legal notice                                                      |
       | Terms of use   | https://toqio.co/terms-of-use   | Terms of use                                                      |
+
+    Scenario: HP_01 TC_06
+      * user checks if the language is English
+      Then user verifies language icon visible and functional
+      And user hovers over the Language Icon
+      Then user verifies English and Spanish language icons are visible and functional
+      When user selects the Spanish Language option
+      Then user verifies the URL of the page is "https://toqio.co/es/"
+      Then user verifies the title "Potencia tu red de distribución para un rendimiento óptimo" appears
+      And user hovers over the Language Icon
+      * user checks if the language is English
+      Then user verifies the button Connect Us is visible and functional

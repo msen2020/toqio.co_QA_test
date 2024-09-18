@@ -1,4 +1,6 @@
-# Test Case 1: Verify Homepage Load and Content Display
+# Test Case 1:
+# HP_01 Verify Homepage Load and Content Display
+# Test Steps:
 # 1. Open the company's website (https://toqio.co/).
 # 2. Verify that the page loads without errors (e.g., 404, 500).
 # 3. Check that the company logo, main banner, and navigation menu are visible.

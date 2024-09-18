@@ -52,20 +52,39 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Platform  | https://toqio.co/platform  | The Toqio platform                                        |
       | Use Cases | https://toqio.co/use-cases | Use cases                                                 |
 
-  Scenario: HP_01 TC_03 verify the Company related links appear and functional
+  Scenario Outline: HP_01 TC_03 verify the Company related links appear and functional
     When user hovers over the link Company
     Then user verifies the Company related links appear and functional
       | About Us |
       | Newsroom |
-      | Team     |
       | Talent   |
+      | Team     |
       | Contact  |
 
-  Scenario: HP_01 TC_04 verify the Resources related links appear and functional
+    When user clicks the Company Related Item Links "<links>"
+    Then user verifies the directed URL "<pages>"
+    Then user verifies the titles "<titles>" of the page
+    Examples:
+      | links    | pages                      | titles                                                            |
+      | About Us | https://toqio.co/about-us/ | What is Toqio?                                                    |
+      | Newsroom | https://toqio.co/newsroom  | Newsroom                                                          |
+      | Team     | https://toqio.co/team      | Leadership                                                        |
+      | Talent   | https://toqio.co/talent    | If you're forward-thinking about finance, this is the place to be |
+      | Contact  | https://toqio.co/contact   | Contact us                                                        |
+
+  Scenario Outline: HP_01 TC_04 verify the Resources related links appear and functional
     When user hovers over the link Resources
     Then user verifies the Resources related links appear and functional
       | Insights |
       | Podcast  |
+
+    When user clicks the Resources Related Item Links "<links>"
+    Then user verifies the directed URL "<pages>"
+    Then user verifies the titles "<titles>" of the page
+    Examples:
+      | links    | pages                     | titles                 |
+      | Insights | https://toqio.co/insights | Insights               |
+      | Podcast  | https://toqio.co/podcast  | Embedded in the Market |
 
   Scenario: HP_01 TC_05 Verify the footer content links are present and functional.
     Then user verifies the company logo is visible in the footer

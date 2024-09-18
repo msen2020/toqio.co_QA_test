@@ -79,6 +79,11 @@ public class MainPage_stepDef extends CommonPage {
         mainPage().verifyCompanyRelatedLinks(dataTable);
     }
 
+    @When("user clicks the Company Related Item Links {string}")
+    public void user_clicks_the_company_related_item_links(String link) {
+        mainPage().clickCompanyRelatedItemLinks(link);
+    }
+
     @When("user hovers over the link Resources")
     public void userHoversOverTheLinkResources() {
         mainPage().resourcesLink.click();
@@ -87,6 +92,11 @@ public class MainPage_stepDef extends CommonPage {
     @Then("user verifies the Resources related links appear and functional")
     public void userVerifiesTheResourcesRelatedLinksAppearAndFunctional(DataTable dataTable) {
         mainPage().verifyResourcesLinks(dataTable);
+    }
+
+    @When("user clicks the Resources Related Item Links {string}")
+    public void user_clicks_the_resources_related_item_links(String link) {
+        mainPage().clickResourcesRelatedItemLinks(link);
     }
 
     @When("user clicks the Footer Item Links {string}")

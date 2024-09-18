@@ -44,6 +44,21 @@ public class MainPage extends CommonPage {
     @FindBy(css = ".footer-social")
     public WebElement socialMediaLinksLocator;
 
+    @FindBy(xpath = "//div[@class='language-menu']")
+    public WebElement languageIcon;
+
+    @FindBy(xpath = "//a[@data-language= 'en']")
+    public WebElement englishOption;
+
+    @FindBy(xpath = "//a[@data-language= 'es']")
+    public WebElement spanishOption;
+
+    @FindBy(tagName = "h1")
+    public WebElement spanishText;
+
+    @FindBy(id = "hs_cos_wrapper_button")
+    public WebElement connectUsButton;
+
     public void footerLinkElement(String linkTest) {
         WebElement footerLink = driver.findElement(By.xpath("//footer//a[text()= '" + linkTest + "']"));
         footerLink.click();
@@ -268,6 +283,38 @@ public class MainPage extends CommonPage {
         if (!found) {
             Assert.fail("Expected title '" + expectedTitle + "' was not found on the page");
         }
+    }
+
+    public void hoverOverTheLanguageIcon() {
+        BrowserUtils.waitForPageToLoad(25);
+        BrowserUtils.waitForVisibility(mainPage().languageIcon);
+        actions.moveToElement(mainPage().languageIcon).build().perform();
+    }
+
+    public void verifyLanguageIconsVisibleAndFunctional() {
+        BrowserUtils.verifyElementDisplayed(mainPage().englishOption);
+        BrowserUtils.verifyElementClickable(mainPage().englishOption);
+        BrowserUtils.verifyElementDisplayed(mainPage().spanishOption);
+        BrowserUtils.verifyElementClickable(mainPage().spanishOption);
+    }
+
+    public void verifyTitleAppears(String expectedTitle) {
+        BrowserUtils.verifyElementDisplayed(mainPage().spanishText);
+        String actualTitle = mainPage().spanishText.getText().replaceAll("\\s+", " ").trim();
+        Assert.assertEquals("Title does not match the expected value", actualTitle, expectedTitle.replaceAll("\\s+", " ").trim());
+    }
+
+    public void userSelectsSpanishLanguage() {
+        mainPage().spanishOption.click();
+    }
+
+    public void userSelectsEnglishLanguage() {
+        mainPage().englishOption.click();
+    }
+
+    public void verifyConnectUsButton() {
+        BrowserUtils.verifyElementDisplayed(mainPage().connectUsButton);
+        BrowserUtils.verifyElementClickable(mainPage().connectUsButton);
     }
 }
 

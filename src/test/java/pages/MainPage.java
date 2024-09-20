@@ -316,5 +316,12 @@ public class MainPage extends CommonPage {
         BrowserUtils.verifyElementDisplayed(mainPage().connectUsButton);
         BrowserUtils.verifyElementClickable(mainPage().connectUsButton);
     }
+
+    public void checkIfLanguageEnglish() {
+        if (!mainPage().languageIcon.getAttribute("lang").contains("en")) {
+            mainPage().languageIcon.click();
+            mainPage().englishOption.click();
+        }
+    }
 }
 

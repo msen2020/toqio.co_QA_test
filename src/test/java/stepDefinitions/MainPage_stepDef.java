@@ -152,9 +152,6 @@ public class MainPage_stepDef extends CommonPage {
 
     @When("user checks if the language is English")
     public void userChecksIfTheLanguageIsEnglish() {
-        if (!mainPage().languageIcon.getAttribute("lang").contains("en")) {
-            mainPage().languageIcon.click();
-            mainPage().englishOption.click();
-        }
+        mainPage().checkIfLanguageEnglish();
     }
 }

@@ -58,14 +58,14 @@
     </dependencies>
 
     <build>
-        <!-- Only test source directory is needed since there's no src/main/java -->
-        <testSourceDirectory>src/test/java</testSourceDirectory>  <!-- Test source directory -->
+<!--        &lt;!&ndash; Only test source directory is needed since there's no src/main/java &ndash;&gt;-->
+<!--        <testSourceDirectory>src/test/java</testSourceDirectory>  &lt;!&ndash; Test source directory &ndash;&gt;-->
 
-        <resources>
-            <resource>
-                <directory>src/test/resources</directory>  <!-- Test resources directory (for feature files, etc.) -->
-            </resource>
-        </resources>
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/test/resources</directory>  &lt;!&ndash; Test resources directory (for feature files, etc.) &ndash;&gt;-->
+<!--            </resource>-->
+<!--        </resources>-->
 
         <plugins>
             <plugin>

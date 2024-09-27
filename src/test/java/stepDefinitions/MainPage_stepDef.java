@@ -140,11 +140,6 @@ public class MainPage_stepDef extends CommonPage {
         mainPage().verifyTitleAppears(expectedTitle);
     }
 
-    @And("user selects the English Language option")
-    public void userSelectsTheEnglishLanguageOption() {
-        mainPage().userSelectsEnglishLanguage();
-    }
-
     @Then("user verifies the button Connect Us is visible and functional")
     public void userVerifiesTheButtonConnectUsIsVisibleAndFunctional() {
         mainPage().verifyConnectUsButton();

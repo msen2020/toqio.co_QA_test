@@ -28,18 +28,13 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Resources |
 
     Then user verifies the content titles are visible on Main page
-      | Empower your distribution network for optimal performance                         |
-      | Build a financial ecosystem on a single platform where everybody wins             |
-      | How it works                                                                      |
-      | Launch faster with a fully configurable platform that's easy to change and manage |
-      | The Toqio platform as your growth accelerator                                     |
-      | Everything you need in one place                                                  |
-      | Our solutions                                                                     |
-      | Trusted by                                                                        |
-      | What we solve                                                                     |
-      | Key industry examples                                                             |
-      | Latest awards                                                                     |
-      | Toqio in the news                                                                 |
+      | Rethink finance. Rediscover growth.               |
+      | Thriving together                                 |
+      | Launch smarter and faster with Toqio              |
+      | What you can do with Toqio                        |
+      | From Toqio to embedded finance: read our insights |
+      | Toqio in the news                                 |
+      | Latest awards                                     |
 
   Scenario Outline: HP_01 TC_02 verify correct pages open when clicked
 #    Then user clicks the "<links>" in the navigation bar and verifies they lead to the correct "<pages>"
@@ -47,12 +42,12 @@ Feature: HP_01 Verify Homepage Load and Content Display
     Then user verifies the directed URL "<pages>"
     Then user verifies the titles "<titles>" of the page
     Examples:
-      | links     | pages                      | titles                                                    |
-      | Home      | https://toqio.co/          | Empower your distribution network for optimal performance |
-      | Platform  | https://toqio.co/platform  | The Toqio platform                                        |
-      | Use Cases | https://toqio.co/use-cases | Use cases                                                 |
+      | links     | pages                      | titles                                     |
+      | Home      | https://toqio.co/          | Rethink finance. Rediscover growth.        |
+      | Platform  | https://toqio.co/platform  | Build financial products your way, faster. |
+      | Use Cases | https://toqio.co/use-cases | Use cases                                  |
 
-  Scenario Outline: HP_01 TC_03 verify the Company related links appear and functional
+  Scenario: HP_01 TC_03 verify the Company related links appear and functional
     When user hovers over the link Company
     Then user verifies the Company related links appear and functional
       | About Us |
@@ -61,6 +56,8 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Team     |
       | Contact  |
 
+  Scenario Outline: HP_01 TC_04 verify the Company related links appear
+    When user hovers over the link Company
     When user clicks the Company Related Item Links "<links>"
     Then user verifies the directed URL "<pages>"
     Then user verifies the titles "<titles>" of the page
@@ -72,7 +69,7 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Talent   | https://toqio.co/talent    | If you're forward-thinking about finance, this is the place to be |
       | Contact  | https://toqio.co/contact   | Contact us                                                        |
 
-  Scenario Outline: HP_01 TC_04 verify the Resources related links appear and functional
+  Scenario Outline: HP_01 TC_05 verify the Resources related links appear and functional
     When user hovers over the link Resources
     Then user verifies the Resources related links appear and functional
       | Insights |
@@ -82,11 +79,14 @@ Feature: HP_01 Verify Homepage Load and Content Display
     Then user verifies the directed URL "<pages>"
     Then user verifies the titles "<titles>" of the page
     Examples:
-      | links    | pages                     | titles                 |
-      | Insights | https://toqio.co/insights | Insights               |
-      | Podcast  | https://toqio.co/podcast  | Embedded in the Market |
+      | links          | pages                                                                                                        | titles                                                                   |
+      | Insights       | https://toqio.co/insights                                                                                    | Insights                                                                 |
+      | Podcast        | https://toqio.co/podcast                                                                                     | Embedded in the Market                                                   |
+      | Reports/Guides | https://toqio.co/reports-guides                                                                              | Reports/Guides                                                           |
+      | Free ebook!    | https://toqio.co/toqio-2024-q3-ebook-unlocking-growth-in-distribution-the-invisible-hand-of-embedded-finance | Unlocking growth in distribution: The invisible hand of embedded finance |
 
-  Scenario: HP_01 TC_05 Verify the footer content links are present and functional.
+
+  Scenario: HP_01 TC_06 Verify the footer content links are present and functional.
     Then user verifies the company logo is visible in the footer
     Then user verifies the Copyright is visible in the footer
     Then user verifies the Social Media Links are visible in the footer
@@ -106,14 +106,14 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Legal notice   |
       | Terms of use   |
 
-  Scenario Outline: HP_01 TC_06 verify Footer Item links directed correctly
+  Scenario Outline: HP_01 TC_07 verify Footer Item links directed correctly
     When user clicks the Footer Item Links "<links>"
     Then user verifies the directed URL "<pages>"
     Then user verifies the titles "<titles>" of the page
     Examples:
       | links          | pages                           | titles                                                            |
-      | Home           | https://toqio.co/               | Empower your distribution network for optimal performance         |
-      | Platform       | https://toqio.co/platform       | The Toqio platform                                                |
+      | Home           | https://toqio.co/               | Rethink finance. Rediscover growth.                                                                  |
+      | Platform       | https://toqio.co/platform       | Build financial products your way, faster.                                                |
       | Use Cases      | https://toqio.co/use-cases      | Use cases                                                         |
       | Insights       | https://toqio.co/insights       | Insights                                                          |
       | Podcast        | https://toqio.co/podcast        | Embedded in the Market The podcast hosted by Toqio!               |
@@ -127,14 +127,14 @@ Feature: HP_01 Verify Homepage Load and Content Display
       | Legal notice   | https://toqio.co/legal-notice   | Legal notice                                                      |
       | Terms of use   | https://toqio.co/terms-of-use   | Terms of use                                                      |
 
-    Scenario: HP_01 TC_06
-      * user checks if the language is English
-      Then user verifies language icon visible and functional
-      And user hovers over the Language Icon
-      Then user verifies English and Spanish language icons are visible and functional
-      When user selects the Spanish Language option
-      Then user verifies the URL of the page is "https://toqio.co/es/"
-      Then user verifies the title "Potencia tu red de distribución para un rendimiento óptimo" appears
-      And user hovers over the Language Icon
-      * user checks if the language is English
-      Then user verifies the button Connect Us is visible and functional
+  Scenario: HP_01 TC_08
+    * user checks if the language is English
+    Then user verifies language icon visible and functional
+    And user hovers over the Language Icon
+    Then user verifies English and Spanish language icons are visible and functional
+    When user selects the Spanish Language option
+    Then user verifies the URL of the page is "https://toqio.co/es/"
+    Then user verifies the title "Potencia tu red de distribución para un rendimiento óptimo" appears
+    And user hovers over the Language Icon
+    * user checks if the language is English
+    Then user verifies the button Connect Us is visible and functional

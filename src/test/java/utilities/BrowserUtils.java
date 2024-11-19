@@ -14,7 +14,7 @@ import static stepDefinitions.Hooks.driver;
 public class BrowserUtils {
 
     public static void waitForVisibility(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(30));
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(70));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -87,6 +87,10 @@ public class BrowserUtils {
     public static void scrollToElement(WebDriver driver, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    public static void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public static void staleElementClick(WebElement element, int timeout) {

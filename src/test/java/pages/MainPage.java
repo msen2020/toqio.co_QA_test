@@ -13,6 +13,7 @@ import java.util.List;
 
 import static stepDefinitions.Hooks.actions;
 import static stepDefinitions.Hooks.driver;
+import static utilities.BrowserUtils.waitForVisibility;
 
 
 public class MainPage extends CommonPage {
@@ -103,31 +104,37 @@ public class MainPage extends CommonPage {
         List<String> expectedTitles = dataTable.asList();
         List<WebElement> titleElements = driver.findElements(By.cssSelector("h1, h2, h3, h4, span"));
 
-        // Verify each expected title
         for (String expectedTitle : expectedTitles) {
-            boolean found = false;
-            for (WebElement element : titleElements) {
-                String actualTitle = element.getText().trim().replaceAll("\\s+", " "); // Trim and normalize whitespace
-                if (actualTitle.equals(expectedTitle.trim().replaceAll("\\s+", " "))) {
-                    // Scroll to the element before verifying visibility
-                    BrowserUtils.scrollToElement(driver, element);
-                    BrowserUtils.waitForVisibility(element);
+            WebElement foundElement = findElementByText(titleElements, expectedTitle);
 
-                    Assert.assertTrue("Element '" + expectedTitle + "' is not visible", element.isDisplayed());
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
+            if (foundElement != null) {
+                BrowserUtils.scrollToElement(foundElement);
+                waitForVisibility(foundElement);
+                Assert.assertTrue("Element '" + expectedTitle + "' is not visible", foundElement.isDisplayed());
+            } else {
                 Assert.fail("Element '" + expectedTitle + "' is not found on the Main page");
             }
         }
     }
 
+    private WebElement findElementByText(List<WebElement> elements, String expectedText) {
+        String normalizedExpectedText = normalizeText(expectedText);
+        for (WebElement element : elements) {
+            if (normalizeText(element.getText()).equals(normalizedExpectedText)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    private String normalizeText(String text) {
+        return text.trim().replaceAll("\\s+", " ");
+    }
+
     public void clickHeaderItem(String link) {
         WebElement linkElement = driver.findElement(By.linkText(link));
         // Wait for element visibility before click
-        BrowserUtils.waitForVisibility(linkElement);
+        waitForVisibility(linkElement);
 
         // Click with handling of stale element
         BrowserUtils.staleElementClick(linkElement, 5);
@@ -137,7 +144,7 @@ public class MainPage extends CommonPage {
         WebElement linkElement = driver.findElement(By.linkText(link));
 
         // Wait for element visibility before click
-        BrowserUtils.waitForVisibility(linkElement);
+        waitForVisibility(linkElement);
 
         // Click with handling of stale element
         BrowserUtils.staleElementClick(linkElement, 5);
@@ -167,7 +174,7 @@ public class MainPage extends CommonPage {
 
     public void hoverOverLinkCompany() {
         BrowserUtils.waitForPageToLoad(25);
-        BrowserUtils.waitForVisibility(mainPage().companyLink);
+        waitForVisibility(mainPage().companyLink);
         actions.moveToElement(mainPage().companyLink).build().perform();
     }
 
@@ -199,7 +206,7 @@ public class MainPage extends CommonPage {
     public void clickCompanyRelatedItemLinks(String link) {
         WebElement linkElement = driver.findElement(By.linkText(link));
         // Wait for element visibility before click
-        BrowserUtils.waitForVisibility(linkElement);
+        waitForVisibility(linkElement);
 
         // Click with handling of stale element
         BrowserUtils.staleElementClick(linkElement, 5);
@@ -208,7 +215,7 @@ public class MainPage extends CommonPage {
     public void clickResourcesRelatedItemLinks(String link) {
         WebElement linkElement = driver.findElement(By.linkText(link));
         // Wait for element visibility before click
-        BrowserUtils.waitForVisibility(linkElement);
+        waitForVisibility(linkElement);
 
         // Click with handling of stale element
         BrowserUtils.staleElementClick(linkElement, 5);
@@ -222,7 +229,7 @@ public class MainPage extends CommonPage {
         // Verify that each expected link is present, visible, and clickable
         for (String expectedLinkTitle : expectedLinks) {
             // Wait for the visibility of the element by text
-            BrowserUtils.waitForVisibility(expectedLinkTitle);
+            waitForVisibility(expectedLinkTitle);
 
             // Find the element by text
             WebElement link = Driver.getDriver().findElement(By.xpath("//*[text()='" + expectedLinkTitle + "']"));
@@ -270,7 +277,7 @@ public class MainPage extends CommonPage {
             if (actualTitle.equals(expectedTitle)) {
                 // Scroll to the element before verifying visibility
                 BrowserUtils.scrollToElement(driver, element);
-                BrowserUtils.waitForVisibility(element);
+                waitForVisibility(element);
 
                 // Assert the element is displayed
                 Assert.assertTrue("Expected title '" + expectedTitle + "' is not visible", element.isDisplayed());
@@ -287,7 +294,7 @@ public class MainPage extends CommonPage {
 
     public void hoverOverTheLanguageIcon() {
         BrowserUtils.waitForPageToLoad(25);
-        BrowserUtils.waitForVisibility(mainPage().languageIcon);
+        waitForVisibility(mainPage().languageIcon);
         actions.moveToElement(mainPage().languageIcon).build().perform();
     }
 
@@ -306,10 +313,6 @@ public class MainPage extends CommonPage {
 
     public void userSelectsSpanishLanguage() {
         mainPage().spanishOption.click();
-    }
-
-    public void userSelectsEnglishLanguage() {
-        mainPage().englishOption.click();
     }
 
     public void verifyConnectUsButton() {
